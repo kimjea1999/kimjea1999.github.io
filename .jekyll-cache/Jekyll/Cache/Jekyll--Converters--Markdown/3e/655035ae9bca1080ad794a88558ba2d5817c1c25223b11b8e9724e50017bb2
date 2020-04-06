@@ -1,0 +1,21 @@
+I"C<p>let me explain that what is java with C</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int main(void){
+
+	int life;
+
+	life = getLifeSpan(&amp;me);
+
+	for(int i = 1; i &lt; 15 * 7; i += 7){
+
+		life -= 10;
+
+	}
+
+	inputLifeSpan(life, &amp;me);
+
+	return 0;
+
+}
+</code></pre></div></div>
+:ET
