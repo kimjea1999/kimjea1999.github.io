@@ -396,11 +396,9 @@ main .about img { max-width: 150px; }
 @media screen and (max-width: 768px) { .post-meta { flex-direction: column-reverse; align-items: baseline; }
   .post-meta .post-date { margin-bottom: 16px; } }
 
-.post-meta h2 { margin: 0; padding: 0; }
-
 .post-link { text-decoration: none; }
 
-.post-title { display: inline-block; font-size: 28px; }
+.post-title { font-size: 28px; padding: 25px 0; margin: 0; border-bottom: solid 1px #ececec; }
 
 .posts, .post-container { list-style-type: none; margin: 45px 30px; }
 
@@ -408,9 +406,9 @@ main .about img { max-width: 150px; }
 
 @media screen and (max-width: 768px) { .posts, .post-container { padding: 0 !important; margin-top: 0; } }
 
-.post-container { padding-left: 30px; margin: 45px 90px; }
+.post-container, #archives { padding-left: 30px; margin: 50px 90px; }
 
-.post { font-family: "Consolas", sans-serif; font-weight: 300; color: #222; line-height: 1.9em; }
+.post { padding: 10px; font-family: "Consolas", sans-serif; font-weight: 300; color: #222; line-height: 1.9em; }
 
 .post a { color: #0a59b0; text-decoration: none; transition: border-bottom 0.4s; }
 
@@ -420,9 +418,9 @@ main .about img { max-width: 150px; }
 
 #posts-label { border-bottom: 1px solid #eee; font-size: 15px; color: #777; text-transform: uppercase; letter-spacing: 0.5px; padding-bottom: 10px; font-weight: normal; }
 
-.category_name { padding: 25px 0; margin: 25px 90px; border-bottom: solid 1px #ececec; }
+.category-name { padding: 25px 0; margin: 0; border-bottom: solid 1px #ececec; }
 
-#archives .archive-group { margin: 0 100px; padding: 10px; margin-bottom: 10px; border-bottom: solid 1px #ececec; }
+#archives .archive-group { padding: 10px; margin-bottom: 10px; border-bottom: solid 1px #ececec; }
 
 #archives .archive-group h3 { display: inline-block; }
 
