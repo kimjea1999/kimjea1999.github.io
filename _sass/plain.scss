@@ -179,7 +179,6 @@ main {
   float: right;
   margin-right: 10px;
   color: #555;
-  min-width: 150px;
 }
 .post-meta {
 	justify-content: space-between;
@@ -224,6 +223,12 @@ main {
 .post-container, #archives {
   padding-left: 30px;
   margin: 50px 90px;
+
+  @media screen and (max-width: $mobileW) {
+	padding: 0;
+	margin: 10px;
+  }
+
 }
 
 .post {
@@ -280,17 +285,38 @@ main {
 
 		h3 {
 			display: inline-block;
+
+			@media screen and (max-width: 426px){ margin-bottom: 0px; }
 		}
 
 		.post-date {
 			display: inline-block;
-			float: right;
+
+			  @media screen and (max-width: 426px) {
+				display: block;
+				padding-left: 10px;
+				width: 100%;
+
+				.icon-calendar{
+					display: none;
+				}
+			  }
 
 			padding: 10px 0;
 		}
 
 		.post-exc {
 			margin: 10px;
+
+			@media screen and (max-width: 426px) {
+				display: block;
+				width: 100%;
+				margin: 0;
+			}
+
+			text-overflow: ellipsis;
+
+			h1{ font-size: 16px; font-weight: normal;}
 		}
 
 	}
