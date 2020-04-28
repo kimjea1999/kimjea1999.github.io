@@ -1,0 +1,207 @@
+I"�A<h2 id="1-perfomance-analysis-성능-분석">1. Perfomance Analysis (성능 분석)</h2>
+<p>프로그램의 performance(성능) 기준이 되는 것은 얼마나 많은 메모리 공간(space)을 사용하는가, 얼마나 오랜 시간(time)이 걸리는가. 이 두 가지라고 볼 수 있다.
+똑같은 일을 수행하는 프로그램이 여러 개 있다면, 그중 메모리를 최대한 덜 쓰고 실행 시간이 덜 걸리는 프로그램이 좋은 성능을 가진 프로그램일 것이다. 
+앞으로 이 카테고리에서 여러 알고리즘을 배우게 될 텐데, 같은 걸 다른 방식으로 구현하는 경우도 꽤 된다. 
+그걸 개발한 사람들이 왜 이대로 안 쓰고 다르게 만들어봐야겠다고 생각을 했을까? 바로 성능 분석을 통해, 본 알고리즘의 성능이 좀 별로라는 걸 알았기 때문이다. 
+따라서 성능이 어떠한지 판단하는 것이 중요하다. 나름의 공식을 사용하여 대략 성능이 어떨지를 추정하는 방식이 성능 분석이다.</p>
+
+<blockquote>
+  <p><strong><u>왜 직접 측정(Performance Measurement)하지 않을까?</u></strong><br />
+쉽게 말해 컴퓨터마다 성능이 다르기 때문이다. 랩탑에서 안 돌아가는 게 데스크탑에선 잘 돌아가고, 데스크탑에서 안 돌아가는 프로그램도 슈퍼컴퓨터로 실행시키면 또 잘 되는 것처럼. (후자는 안 해봤지만 그럴 것 같다.)
+물론 직접 측정하기도 하는데, 그래서 성능 분석도 필요하다는 소리이다.</p>
+</blockquote>
+
+<h3 id="1-1-space-complexity-공간-복잡도">1-1. Space Complexity (공간 복잡도)</h3>
+<p>프로그램이 사용하는 메모리 공간의 양을 추정한 것이다.</p>
+<ul>
+  <li>Fixed space requirements : 고정 공간 (input, output에 영향을 받지 않음)</li>
+  <li>Variable space requirements : 가변 공간 (input에 따라 사용량이 달라짐)</li>
+</ul>
+
+<p>따라서 “공간 복잡도 = 고정 공간 + 가변 공간” 이 되고, 이를 공식으로 표현하면,</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S(P) = c + Sp(I)
+</code></pre></div></div>
+<p>이다. 이때, 가변공간을 결정하는 input 값이 곧 I가 된다. 이렇게만 설명하면 어려우니 한번 예시를 들어 보자.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">add_nums</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+  <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">c</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>여기서 필요한 공간은 고정 공간밖에 없다. (파라미터인 정수형 변수 a, b와 지역 변수로 선언된 정수형 변수 c)<br />
+그럼 어떨 때 가변 공간을 사용하는 것일까? 다음의 예시를 보자.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">one_to_n</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">){</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">num</span><span class="p">;</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="n">num</span> <span class="o">+</span> <span class="n">one_to_n</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>one_to_n은 1~num까지의 숫자를 모두 더하는 재귀 함수이다. 파라미터로 넘긴 값이 3일 때 이 함수가 사용하는 메모리 공간을 생각해 보자.
+<img src="/images/20200404_1.png" alt="explain" /><br />
+코드는 예시와 같이 작성했지만, 동작은 그림과 같다. 즉, 함수 실행이 세 번 되며, 따라서 파라미터로 설정된 변수 공간을 <u>세 개</u> 사용한다.
+이럴 때 이 함수는 가변 공간을 사용한다고 한다.<br />
+for문으로 동일한 기능을 구현하면 아래와 같은데,</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">one_to_n_for</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">){</span>
+  <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="n">i</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>이 함수가 사용하는 공간은 정수형 변수 num, result, i의 세 가지 뿐이다. 위의 one_to_n 함수와 기능은 동일하지만 고정 공간만을 사용한다.
+num 값이 커질수록, 재귀 함수는 공간 복잡도가 올라가지만 for문을 이용한 함수는 그대로이므로 아래의 함수가 더 좋은 성능을 가졌다고 평가할 수 있겠다.</p>
+
+<h3 id="1-2-time-complexity-시간-복잡도">1-2. Time Complexity (시간 복잡도)</h3>
+<p>프로그램을 실행하는 데 걸리는 시간을 추정한 것이다.<br />
+여기에는 컴파일 시간도 포함되는데, 식으로 표현하면</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>T(P) = Compile time + Running time(Tp)
+</code></pre></div></div>
+<p>이다. 컴파일하는 데 걸리는 시간은 1회만 계산한다. 따라서 Tp 값이 실질적으로 시간 복잡도를 좌우한다.<br />
+Tp를 계산하는 방법은, 앞에 말했듯이 컴퓨터 성능이 제각기 다른 이유로 인해 ‘step’을 세어 그걸로 추정한다.</p>
+<blockquote>
+  <p><strong><u>Step?</u></strong><br />
+문법적, 기능적으로 의미 있는 프로그램 단위이다. 일반적으로 프로그래밍을 했을 때, 한 줄이 거의 한 스텝이 된다. 변수 선언은 예외로 한 스텝으로 치지 않는다.</p>
+</blockquote>
+
+<p>프로그램의 스텝을 세는 두 가지 방법에는,</p>
+<ul>
+  <li>테이블을 작성해서 수동으로 계산</li>
+  <li>전역변수를 사용하여 계산</li>
+</ul>
+
+<p>이 있다. 다음의 예시를 두 가지 방법을 모두 써서 분석해보겠다.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">sum</span><span class="p">(</span><span class="kt">int</span> <span class="n">list</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>테이블을 이용하기</li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th>line</th>
+      <th>step counts per statement</th>
+      <th>Frequency</th>
+      <th>total(step * frequency)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>int sum(int list[], int n)</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>int i, <u>result = 0</u></td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>for(i = 0; i &lt; n; i++)</td>
+      <td>1</td>
+      <td>n+1</td>
+      <td>n+1</td>
+    </tr>
+    <tr>
+      <td>result += list[i]</td>
+      <td>1</td>
+      <td>n</td>
+      <td>n</td>
+    </tr>
+    <tr>
+      <td>return result</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>2n+3</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>여기서 왜 for문은 n+1 반복으로 계산하고, for문 내부의 연산은 n번 반복으로 계산했을까? 그 이유는 i == n일 때, for문의 연산, 조건식 부분까지는 실행이 되기 때문이다. 
+하지만 조건식에서 false가 되기 때문에, 내부 연산은 실행되지 않고 for문이 종료된다. 그래서 내부 연산보다 1회 더 많이 반복되는 것이다.</p>
+
+<ol>
+  <li>전역변수 사용하기</li>
+</ol>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">sum</span><span class="p">(</span><span class="kt">int</span> <span class="n">list</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">steps</span><span class="o">++</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">steps</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="n">steps</span><span class="o">++</span><span class="p">;</span>
+  <span class="n">steps</span><span class="o">++</span><span class="p">;</span> <span class="c1">//아래의 return의 step</span>
+  <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>결과 : steps == 2n+3
+</code></pre></div></div>
+
+<p>1이나 2나 원리가 같으므로 결과도 당연히 같다. 그런데 스텝을 센 결과를 보면, 실행 횟수(n)에 따라 그 값이 달라진다는 것을 알 수 있다. 여기서 또 세 가지 경우를 나누어 생각해볼 수 있다.</p>
+<ul>
+  <li>Best Case : 실행 횟수가 최소가 되어 step이 최솟값이 되는 경우</li>
+  <li>Worst Case : 실행 횟수가 최대가 되어 step이 최댓값이 되는 경우</li>
+  <li>Average Case : 실행 횟수가 평균적인 경우</li>
+</ul>
+
+<p>Worst Case에서도 잘 돌아가는 프로그램이 비교적 좋은 프로그램일 것이다. 그런데 위의 예시에서 최악의 n값은 무엇일까? 무한대? 그러면 한두 스텝정도는 빼먹고 안 세도 되는 거 아닌가? 쓸만한 프로그램의 기준은 대체 무엇이 되는 것일까? 이제 이것에 대해서 알아보자.</p>
+
+<hr />
+<h2 id="2-big-o-notation">2. Big-O Notation</h2>
+<p>결국 Worst Case를 상정하면, 정확한 스텝 수는 중요하지 않다. 일단 세기도 어렵고. 그런데 명백히 더 빨리 돌아가는 프로그램이 있고 적당한 게 있고 도저히 못 써먹을 것도 실재하니 옥석을 가리긴 해야 할 것 같다.
+그러기 위해서 쓰는 것이 바로 Big-O(big “oh”) 표기법이다. 실행 횟수에 따라 스텝 수가 어떻게 변하는지 2차원 그래프로 나타내어, 시간 복잡도가 어떤지를 간단히 파악할 수 있다.</p>
+
+<p><img src="/images/20200404_2.png" alt="explain" /></p>
+<center><font size="2"> 어느 때를 봐도 O(n)의 시간 복잡도가 O(n^2) 이하이다. (n은 자연수 값이므로) </font></center>
+
+<p>Big-O는 이처럼 그래프로 나타낼 수 있는데, 중요한 것은 그래프의 개형이다. 예를 들어 시간 복잡도가 5n^3+2n+7이 되어 이를 그래프로 나타내면, 그 그래프는 n^3(최고차항)의 그래프의 폭을 바꾸고 평행이동시킨 것이 된다.<br />
+Big-O는 쉽게 말해, 증가 양상-그래프의 모양을 보고 분류해서 대략 어느 ‘급’의 성능을 지녔는지를 파악한다고 보면 된다. 이 친구가 상수함수급인지, 일차함수 급인지, 이차함수 급인지, 지수함수 급인지… 등등.<br />
+근데 최고차항의 계수가 2인 식은, 무슨 짓을 하더라도 U자 모양이다. 계수가 3이라면 역시 꽁무니에 무슨 식을 달더라도 S자 모양이다.<br />
+그러니까 잡다한 폭 변화나 평행이동한 것들을 싹 지우면(= 최고차항의 계수를 1로 바꾸고, 나머지를 전부 지우면) 바로 그게 그 함수의 ‘급’이자 Big-O 표기법인 것이다.<br />
+(제대로 된 정의는 <code class="highlighter-rouge">f(n)=O(g(n))일 때, c*g(n) &gt; f(n)</code>이긴 한데, 이런 수학적인 정의보다 Big-O를 어떻게 봐야 하는지를 먼저 아는 게 훨씬 도움이 될 것 같았다. Big-O 표기법 개발한 사람도 위의 내용을 먼저 생각했지 수학적으로 어떻게 정의할지를
+먼저 고민하진 않았을 것이다. 뭐 아닐 수도 있고.)</p>
+
+<p>Big-O의 종류 중 쉽게 볼만한 것들은 대략 이렇다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>O(1) &lt; O(log n) &lt; O(n) &lt; O(n * log n) &lt; O(n^2) &lt; O(n^3) &lt; O(2^n) &lt; O(n!)
+</code></pre></div></div>
+
+<p>O(n^3)부터 상당히 못 써먹을 것 취급을 받는다. 근데 O(n!)도 필요하긴 하다. 예를 들어 여행하는 영업사원 문제(Travelling salesman problem)같은 걸 플 때. (참고로 세계에는 대략 200여개국이 존재하는데, 10!이 3,628,800이다. 하하.) 
+그래서 DNA 컴퓨팅 같은 것도 나오고 있는 것이다. 대체 불가능한 알고리즘도 못 써먹을 건 못 써먹을 것이니.</p>
+
+<p>좀 더 상세히 짚고 들어가자면, Big-O는 점근 표기법의 일종이다. 점근 표기법이 뭐냐면 앞에서 Big-O가 뭔지 설명한 것과 매우 비슷하다. 대강 모양새 보고 파악하는 거. 차이점은 Big-O는 상한값을 의미한다는 것 뿐.<br />
+Big-O는 딱 ‘이보다 더 나쁠 순 없다.’인 것이다. 물론 다른 점근 표기법도 있다. 하한값을 의미하는 Ω(n), 상한값, 하한값을 동시에 표현하는 Θ(n).<br />
+사용 시 주의점은 너무 의미없는 소리를 하면 안 된다는 것이다. 다른 사람에게 진지하게 자기가 몇 살처럼 보이냐고 물었는데, 그 사람이 “하하, 잘 모르겠는데 확실히 200살은 안 되어 보여요.” 하면 퍽이나 유용할 것이다.<br />
+상한값이든 하한값이든, 값의 범위를 좁게 잡아줄수록 의미가 있고 정확한 분석이 된다.</p>
+
+<hr />
+<h2 id="3-performance-measurement-성능-측정">3. Performance Measurement (성능 측정)</h2>
+<p>일단 실행 시의 시각을 재고, (Best/Worst/Average) case data를 넣어 처리한 뒤, 종료 시의 시각을 재어, 두 시각 사이의 시간을 계산한다.
+C에서는 <time.h>에서 제공하는 clock과 time 함수를 써서 계산할 수 있다.</time.h></p>
+
+<hr />
+<p>이제 기초적인 내용은 끝났고, 다음부터는 여러 ADT와 알고리즘을 다룰 것이다.</p>
+:ET

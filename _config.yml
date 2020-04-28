@@ -13,7 +13,7 @@ sass:
   sass_dir: _sass
 plainwhite:
   name: return 0;
-  tagline: a trival student
+  tagline: a trivial student
   date_format: "%b %-d, %Y"
   sitemap: false
 
@@ -55,9 +55,6 @@ plainwhite:
 # this and add the path to the pages in order as they should show up
 #header_pages:
 # - about.md
-
-# Build settings
-theme: plainwhite
 
 plugins:
   - jekyll-seo-tag

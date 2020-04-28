@@ -7,7 +7,7 @@ layout: default
 
 	<h1 class="post-title">/{{ page.title }}</h1>
 
-	{% for post in site.categories.[page.title] %}
+	{% for post in site.categories[page.title] %}
 
 		<div class="archive-group">
 			<article class="archive-item">
@@ -17,10 +17,6 @@ layout: default
 				<div class="post-date">
 					<i class="icon-calendar"></i>
 					{{ post.date | date: date_format }}
-				</div>
-
-				<div class="post-exc">
-					{{ post.excerpt | truncate: 100, '...' }}
 				</div>
 
 			</article>
