@@ -208,18 +208,18 @@ main {
   color: #555;
 }
 .post-meta {
-	justify-content: space-between;
-	align-items: center;
-	padding-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
 
-	@media screen and (max-width: $mobileW) {
-		flex-direction: column-reverse;
-		align-items: baseline;
+  @media screen and (max-width: $mobileW) {
+    flex-direction: column-reverse;
+    align-items: baseline;
 
-		.post-date {
-			margin-bottom: 16px;
-		}
-	}
+    .post-date {
+      margin-bottom: 16px;
+    }
+  }
 }
 .post-link {
   text-decoration: none;
@@ -227,11 +227,11 @@ main {
 
 .post-title {
 
-	font-size: 28px;
+  font-size: 28px;
 
-	padding: 25px 0;
-	margin: 0;
-	border-bottom: solid 1px #ececec;
+  padding: 25px 0;
+  margin: 0;
+  border-bottom: solid 1px #ececec;
 
         .show-direc {
           display: none;
@@ -261,29 +261,29 @@ main {
   margin: 50px 90px;
 
   @media screen and (max-width: $mobileW) {
-	padding: 0;
-	margin: 10px;
+  padding: 0;
+  margin: 10px;
   }
 
 }
 
 .post {
 
-	padding: 10px;
+  padding: 10px;
 
-	font-family: "Consolas", sans-serif;
-	font-weight: 300;
-	color: #222;
-	line-height: 1.9em;
+  font-family: "Consolas", sans-serif;
+  font-weight: 300;
+  color: #222;
+  line-height: 1.9em;
 
-	a {
-	  color: $linkColor;
-	  text-decoration: none;
-	  transition: border-bottom 0.4s;
-	  &:hover {
-	    border-bottom: 0.5px solid $linkColor;
-	  }
-	}
+  a {
+    color: $linkColor;
+    text-decoration: none;
+    transition: border-bottom 0.4s;
+    &:hover {
+      border-bottom: 0.5px solid $linkColor;
+    }
+  }
 
         table {
           width: 100%;
@@ -322,84 +322,87 @@ main {
 }
 
 .category-name {
-	padding: 25px 0;
-	margin: 0;
-	border-bottom: solid 1px #ececec;
+  padding: 25px 0;
+  margin: 0;
+  border-bottom: solid 1px #ececec;
 }
 
 #archives {
 
-	.archive-group {
+  @media screen and (max-width: 426px){ 
+    article { 
+      display: inline-block;
+      width: 100%;
+    }
+  }
 
-		padding: 10px;
-		margin-bottom: 10px;
-		border-bottom: solid 1px #ececec;
+  .archive-group {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #ececec;
 
-		h3 {
-			display: inline-block;
+    h3 {
+      display: inline-block;
 
-			@media screen and (max-width: 426px){ margin-bottom: 0px; }
-		}
+      @media screen and (max-width: 426px){ margin-bottom: 0px; }
+    }
 
-		.post-date {
-			display: inline-block;
+    .post-date {
+      display: inline-block;
+      padding: 10px 0;
 
-			  @media screen and (max-width: 426px) {
-				display: block;
-				padding-left: 10px;
-				width: 100%;
+        @media screen and (max-width: 426px) {
+          padding-left: 10px;
+          width: 100%;
+          text-align: right;
 
-				.icon-calendar{
-					display: none;
-				}
-			  }
+          .icon-calendar{ display: none; }
+        }
+    }
 
-			padding: 10px 0;
-		}
+    .post-exc {
+      margin: 10px;
 
-		.post-exc {
-			margin: 10px;
+      @media screen and (max-width: 426px) {
+        display: block;
+        width: 100%;
+        margin: 0;
+      }
 
-			@media screen and (max-width: 426px) {
-				display: block;
-				width: 100%;
-				margin: 0;
-			}
+      text-overflow: ellipsis;
 
-			text-overflow: ellipsis;
+      h1{ font-size: 16px; font-weight: normal;}
+    }
 
-			h1{ font-size: 16px; font-weight: normal;}
-		}
-
-	}
+  }
 
 }
 
 #main-page{
 
-	font-family: "Consolas", sans-serif;
+  font-family: "Consolas", sans-serif;
 
-	padding-top: 150px;
-	text-align: center;
+  padding-top: 150px;
+  text-align: center;
 
-	@media screen and (max-width: $mobileW) {
-		padding-top: 0;
-	}
+  @media screen and (max-width: $mobileW) {
+    padding-top: 0;
+  }
 
-	img {
+  img {
 
-		display: block;
+    display: block;
 
-		margin: 0 auto;
-		width: 300px;
-		height: 300px;
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
 
-	}
+  }
 
-	p {
+  p {
 
-		font-size: 9pt;
+    font-size: 9pt;
 
-	}
+  }
 
 }

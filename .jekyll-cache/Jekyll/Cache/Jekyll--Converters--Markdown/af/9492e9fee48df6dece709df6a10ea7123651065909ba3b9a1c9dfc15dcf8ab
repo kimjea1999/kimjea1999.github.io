@@ -1,0 +1,151 @@
+I"�9<h2 id="1-메소드">1. 메소드</h2>
+<p>메소드란 c의 함수와 같은 개념이다. 앞에서 배운 OOP의 특징 중 ‘캡슐화’를 따르기 위해 메소드는 클래스 내부에 들어가있어야 한다.<br />
+현실로 치자면 메소드는 ‘행위’인 셈인데, 심장(객체)과 박동(메소드)이 분리될 수 있을까? 행위의 주체가 있어야 그 행위가 발생할 수 있는 것이다.<br />
+하여튼 그래서 클래스에 행위를 지정해줄 수 있다. 예를 들어 Human a, b를 만들고, 얘네가 걸어다니게끔 해 보자. a는 걸을 때 소리가 거의 안 나고, b는 아주 시끄럽게 걸어다니는 편이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Human</span><span class="o">{</span>
+  <span class="nc">String</span> <span class="n">walkingSound</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">walk</span><span class="o">(){</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">walkingSound</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">example</span><span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+    <span class="nc">Human</span> <span class="n">a</span><span class="o">;</span>
+    <span class="nc">Human</span> <span class="n">b</span><span class="o">;</span>
+    <span class="n">a</span><span class="o">.</span><span class="na">walkingSound</span> <span class="o">=</span> <span class="s">"..."</span><span class="o">;</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">walkingSound</span> <span class="o">=</span> <span class="s">"쿵쿵쿵"</span><span class="o">;</span>
+
+    <span class="n">a</span><span class="o">.</span><span class="na">walk</span><span class="o">();</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">walk</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">결과</span> <span class="o">:</span> <span class="o">...</span>
+      <span class="n">쿵쿵쿵</span>
+</code></pre></div></div>
+
+<p>void walk()가 있어서 Human 객체들은 걸어다닐 수 있다.</p>
+
+<p>자바 메소드의 특징은 다음의 두 가지이다.</p>
+<ul>
+  <li>Overloading(오버로딩) : 한 클래스 내에 이름이 같은 메소드가 여러 개 존재할 수 있다. (매개 변수로 구분함)</li>
+  <li>Overriding(오버라이딩) : 상위 클래스의 메소드를 하위 클래스에서 재정의하여 사용할 수 있다.</li>
+</ul>
+
+<p>상위 클래스나 하위 클래스 같은 상속 개념은 다음에 다룰 것이므로 제쳐두고 지금은 오버로딩이 뭔지 알아보자. 앞에서 다형성(같은 이름의 요소가 다양한 기능을 수행할 수 있게 만드는 것.)이 OPP의 특징이라고 했다. 
+이게 뭐가 좋은가 하면, 매개 변수가 주어지면 알아서 그거에 맞는 처리를 해준다! 다음의 예시를 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CalculatorOnlyAdd</span><span class="o">{</span>
+  <span class="kt">int</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">){</span>
+    <span class="k">return</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">int</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">,</span> <span class="kt">int</span> <span class="n">k</span><span class="o">){</span>
+    <span class="k">return</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="n">k</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">example</span><span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+    <span class="nc">CalculatorOnlyAdd</span> <span class="n">a</span><span class="o">;</span>
+
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">));</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>만약 오버로딩을 지원하지 않았다면, 수를 두 개 더하는 함수와 세 개 더하는 함수는 결국 쓰임새는 비슷한데 각각 다른 이름으로 만들어서 써야 했을 것이다. 코드가 길어지면 메소드 이름 일일이 찾아서 써야 할텐데 꽤 귀찮다.</p>
+
+<h2 id="2-생성자">2. 생성자</h2>
+<p>생성자는 메소드 중, 초기화 목적으로 실행되는 클래스와 동일한 이름을 가진 메소드를 의미한다. 이것을 쓰는 이유는 객체를 생성할 때 손쉽게 원하는 값을 바로 넣어줄 수 있기 때문이다.
+만약 클래스의 멤버 변수가 엄청 많다면 일일히 값을 대입해서 초기화시키기 귀찮을 것이다. 위의 Human 클래스에 생성자를 추가하면,</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Human</span><span class="o">{</span>
+  <span class="nc">String</span> <span class="n">walkingSound</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">Human</span><span class="o">(</span><span class="nc">String</span> <span class="n">ws</span><span class="o">){</span>      <span class="c1">//생성자 추가</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">walkingSound</span> <span class="o">=</span> <span class="n">ws</span><span class="o">;</span>   
+  <span class="o">}</span>                           
+
+  <span class="kt">void</span> <span class="nf">walk</span><span class="o">(){</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">walkingSound</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">example</span><span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+    <span class="nc">Human</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Human</span><span class="o">(</span><span class="s">"..."</span><span class="o">);</span>  <span class="c1">//생성자를 이용한 초기화</span>
+    <span class="nc">Human</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Human</span><span class="o">(</span><span class="s">"쿵쿵쿵"</span><span class="o">);</span>
+
+    <span class="n">a</span><span class="o">.</span><span class="na">walk</span><span class="o">();</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">walk</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>가 된다.</p>
+
+<blockquote>
+  <p><strong><u>this?</u></strong><br />
+자기 자신을 가리키는 레퍼런스다. 즉, this.walkingSound는 ‘이 객체의 멤버 변수 중 walkingSound’를 의미한다.
+보통은 안 써도 괜찮지만 써야 하는 경우가 몇 가지 있다. 예를 들어 한 클래스 안의 메소드 내부 지역 변수와, 멤버 변수의 이름이 겹치는 경우, 객체 자신의 레퍼런스를 반환 혹은 전달하는 경우이다.</p>
+</blockquote>
+
+<p>사실 원래 클래스를 만들면 그 안에 기본적으로 디폴트 생성자가 들어있다. 디폴트 생성자란 매개 변수가 없는 생성자로, 그냥 new 클래스명()으로 객체를 만들면 디폴트 생성자를 사용하는 것이 된다.<br />
+그런데 생성자를 하나라도 정의하면 이 디폴트 생성자는 소멸하여 쓸 수 없게 된다.</p>
+
+<p>그리고 생성자도 메소드와 마찬가지로 오버로딩을 할 수 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Class</span> <span class="nc">Human</span><span class="o">{</span>
+  <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+  <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">Human</span><span class="o">(</span><span class="nc">String</span> <span class="n">n</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kt">void</span> <span class="nf">Human</span><span class="o">(</span><span class="nc">String</span> <span class="n">n</span><span class="o">,</span> <span class="kt">int</span> <span class="n">a</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">example</span><span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+    <span class="nc">Human</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Human</span><span class="o">(</span><span class="s">"kim"</span><span class="o">);</span>
+    <span class="nc">Human</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Human</span><span class="o">(</span><span class="s">"park"</span><span class="o">,</span> <span class="mi">51</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>이렇게 만들면 a는 첫 번째 생성자로 생성되고, b는 두 번째 생성자로 생성된다.<br />
+근데 두 생성자의 this.name = n 부분이 겹치는데,</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">Human</span><span class="o">(</span><span class="nc">String</span> <span class="n">n</span><span class="o">){</span>
+  <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">Human</span><span class="o">(</span><span class="nc">String</span> <span class="n">n</span><span class="o">,</span> <span class="kt">int</span> <span class="n">a</span><span class="o">){</span>
+  <span class="nc">Human</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+  <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>이렇게 할 수는 없을까?<br />
+일단 위의 코드는 틀렸지만 그렇게 할 수 있는 방법은 존재한다. this()를 사용하는 것이다. (this와 다르다!) this()는 자기 자신의 생성자를 호출한다. 즉,</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">Human</span><span class="o">(</span><span class="nc">String</span> <span class="n">n</span><span class="o">){</span>
+  <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
+<span class="o">}</span>
+  
+<span class="kt">void</span> <span class="nf">Human</span><span class="o">(</span><span class="nc">String</span> <span class="n">n</span><span class="o">,</span> <span class="kt">int</span> <span class="n">a</span><span class="o">){</span>
+  <span class="k">this</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+  <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>이렇게 하면 의도대로 잘 동작한다. (매개 변수가 하나인 생성자를 호출하게 될 것이다.)</p>
+:ET

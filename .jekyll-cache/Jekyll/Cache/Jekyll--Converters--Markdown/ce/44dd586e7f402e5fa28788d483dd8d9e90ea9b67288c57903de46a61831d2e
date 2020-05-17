@@ -1,0 +1,108 @@
+I"<p>앞에서는 부울 대수를 이용해 식을 간소화했다. 진리표가 같고 더 간단한 식을 도출하기 위해서이다. 그러면 반대로 진리표가 주어졌을 때, 간략한 함수식을 거기서 뽑아낼 수 있다면 굳이 귀찮게 식 정리할 필요가 없지 않을까?<br />
+정준형과 표준형은 이에 대한 이야기이다.</p>
+
+<hr />
+<h2 id="1-canonical-form-정준형식">1. Canonical Form (정준형식)</h2>
+<p>정준 + 형식이다. 정준은 바를 정자에 준할 준 자로, 표준에 준한다고 해석해도 되지 않을까 싶다.<br />
+정준형을 이용하기 위해 알아야 될 용어가 두 개 있다.</p>
+<ul>
+  <li>minterm(최소항) : 값이 1이 될 때의 각 변수들 사이 AND 연산이다.</li>
+  <li>maxterm(최대항) : 값이 0이 될 때의 각 변수들 사이 OR 연산이다.</li>
+</ul>
+
+<p>진리표에 있는 minterm들의 합 또는 maxterm들의 곱으로 부울 함수 식을 나타내는 형식이 바로 정준형식이다.
+근데 이들을 왜 각각 최소항, 최대항이라고 부르는지가 궁금해서, 그에 대한 스택 오버플로우의 한 스레드를 읽었는데 사람마다 다양한 해석이 있다.</p>
+<ul>
+  <li>최소항이 1(true)이 되는 경우는 모든 리터럴이 1일 때 단 하나이지만, 최대항이 1이 되는 경우는 모든 리터럴이 0일 때 단 한 경우를 제외하고 전부 해당하기 때문이다.</li>
+  <li>벤 다이어그램을 그렸을 때 교집합(곱)이 합집합(합)보다 면적이 작기 때문이다.</li>
+  <li>최소항의 합이 1이 되기 위해서는 1이 최소(1개)로 존재해도 되지만 최대항의 곱이 1이 되기 위해서는 모든 값이 1이어야 하기 때문이다.</li>
+</ul>
+
+<p>참고로 제일 많은 추천을 받은 건 맨 첫 번째 설명이다.<br />
+여기에 대해 더 깊게 다루는 건 언젠가로 미루고 그래서 정준형식이 어떤 건지 예시를 들어 보여주겠다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">x</th>
+      <th style="text-align: center">y</th>
+      <th style="text-align: center">z</th>
+      <th style="text-align: center">F</th>
+      <th style="text-align: center">G</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>이 진리표의 F를 최소항의 합, G를 최대항의 곱으로 나타내어 보자.</p>
+
+<p>F가 1이 될 때는 (x, y, z)가 (0, 0, 1), (1, 0, 0), (1, 1, 1)일 때이다. 따라서 최소항은 x’y’z, xy’z’, xyz이다. <br />
+왜 (0, 0, 1) -&gt; x’y’z가 되냐면, 여기에 x=0, y=0, z=1을 입력했을 때 결과값이 1이 되어야 진리표와 일치하기 때문이다. 
+아까 최소항의 합으로 함수를 나타낼 수 있다고 했으니, F = x’y’z + xy’z’ + xyz일 것이다.<br />
+F에 <u>진리표 값이 1일 때의 값 조합(여기서는 위의 세 조합)을 입력하면 결과값은 1이 된다.</u></p>
+
+<p>G가 0이 될 때는 (x, y, z)가 (0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0)일 때이다. 따라서 최대항은 x+y+z, x+y+z’, x+y’+z, x’+y+z이다.<br />
+이것도 왜 (0, 0, 1) -&gt; x+y+z’가 되냐면, 여기에 x=0, y=0, z=1을 입력했을 때 결과값이 0이 되어야 진리표와 일치하기 때문이다.<br />
+최대항의 곱으로 나타내면 G = (x+y+z)(x+y+z’)(x+y’+z)(x’+y+z)이다.<br />
+G에 <u>진리표 값이 0일 때의 값 조합(여기서는 위의 네 조합)을 입력하면 결과값은 0이 된다.</u></p>
+
+<p>각 표현 방식은 결국 간단히 말하면, 진리표에서 1이 될 때 리터럴 값 조합을 넣으면 1이 나오고, 0이 될 때 리터럴 값 조합을 넣으면 0이 나오는, 지극히 당연한 형태를 가지고 있다.
+다만 1을 중심으로 만들지 0을 중심으로 만들지가 갈리는 것일 뿐.</p>
+:ET

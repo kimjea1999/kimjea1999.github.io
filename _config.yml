@@ -16,6 +16,7 @@ plainwhite:
   tagline: a trivial student
   date_format: "%b %-d, %Y"
   sitemap: false
+  future: true
 
   # generate social links in footer
   social_links:
